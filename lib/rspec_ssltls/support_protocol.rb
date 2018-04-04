@@ -19,6 +19,7 @@ RSpec::Matchers.define :support_protocol do |protocol|
       ssl_context.ciphers = ['ALL']
       ssl_socket = OpenSSL::SSL::SSLSocket.new(socket, ssl_context)
       ssl_socket.sync_close = true
+      ssl_socket.hostname = uri.host
       begin
         ssl_socket.connect
         @supported_protocol.add(pr) if ssl_socket.ssl_version

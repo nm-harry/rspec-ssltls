@@ -18,6 +18,7 @@ RSpec::Matchers.define :choose_cipher do |cipher|
     ssl_context.ciphers = @ciphers
     ssl_socket = OpenSSL::SSL::SSLSocket.new(socket, ssl_context)
     ssl_socket.sync_close = true
+    ssl_socket.hostname = uri.hostname
     result = false
     begin
       ssl_socket.connect

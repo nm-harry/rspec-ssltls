@@ -14,6 +14,7 @@ RSpec::Matchers.define :have_certificate do
     ssl_context.cert_store  = @cert_store  if @cert_store
     ssl_socket = OpenSSL::SSL::SSLSocket.new(socket, ssl_context)
     ssl_socket.sync_close = true
+    ssl_socket.hostname = uri.host
     ssl_socket.connect
     if ssl_socket.peer_cert_chain
       @peer_cert = ssl_socket.peer_cert_chain[@chain_number]
